@@ -28,3 +28,6 @@ Reset - Go back in time and erase a commit (history will be changed)
 C1 -- C2 -- C3 -- C4 -- C5
 
 
+a wrong commit here
+
+
