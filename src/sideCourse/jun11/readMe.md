@@ -19,3 +19,5 @@ GitLab CI
 
 
 github/gitlab/bitbucket - remote repository for source code management.
+
+Checking the poll SCM working in Jenkins freestyle project
