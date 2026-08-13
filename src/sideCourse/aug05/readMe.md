@@ -93,5 +93,95 @@ select MAX(Salary) from employees
 
 select name, salary from employees order by salary desc  LIMIT 1 OFFSET 2;
 
+-----------------------------------------------------------------------------------
+
+Index are data structures that speeds up the data retrieval.
+
+Create Index index_email on Students(Email); ----- create a simple index.
+Create Index index_name on Students(Email, FirstName); ----- create a composite index.
+Drop Index index_name on Students; ----- drop the index
+
+
+
+Transactions ---> It is a sequence of SQL operations that either all succeed or all fails.
+
+# ACID properties
+A - Atomicity - All or none
+C - Consistency - DB moves from one valid state to another
+I - Isolation - Concurrent txs don't interfere with each other.
+D - Durability - Commited data persist even after system failure.
+
+
+Bank transfer
+A -- 100$ debited from account A and 100$ credit to account B. Both should succeed or both should fail.
+C -- Total money should remain same.
+I -- Another txs should not interfere here.
+D -- Once confirmed, transfer won't be lost.
+
+BEGIN Transaction;
+INSERT into ACCOUNTS(Id, amount) value (1, 100);
+INSERT into ACCOUNTS(Id, amount) value (2, 500);
+-- if everything is correct --
+COMMIT;
+-- or if there is an error --
+ROLLBACK;
+
+
+NoSQL -- 
+-- Document  --- mongoDB, Couchbase, DynamoDb
+-- Key-value --- Redis, Memcache
+--serach --- elasticsearch
+
+
+MongoDb -- it stores data in JSON like documents. it is designed for flexibility and stability. 
+ SQL                    NoSQL
+Database               Database
+Table                  Collection
+Row                    Document
+Column                 Field
+Index                  Index
+
+
+{
+_id: ObjectId('59b99db4cfa9a34dcd7885b6'),
+name: 'Ned Stark 1',
+email: 'sean_bean@gameofthron.es',
+password: '$2b$12$UREFwsRUoyF0CRqGNK0LzO0HM/jLhgUCNNIJ9RJAqMUQ74crlJ1Vu'
+}
+
+use dbname --- to switch to that db
+db.collectionName.find() -- show all the documents in the collection
+db.users.find().limit(2).skip(1) -- limit and skip
+db.users.find({"name":"Jaime Lannister"})
+db.movies.find({"runtime":{$lt:10}})
+eq - equals
+ne - not equals
+gt - graeter than
+lt - less than
+and
+or
+in  -- {status:{$in:["inactive","active"]}}
+nin
+
+db.users.updateOne({"name":"Ned Stark 1"},{$set:{"email": "stark@gmail.com"}})
+db.users.updateMany({"age":{$gt:15}}},{$set:{"email": "stark@gmail.com"}})
+-set
+-unset
+-push
+-pull
+
+db.users.deleteOne({"name":"Ned Stark 1"})
+
+
+db.movies.aggregate([
+{ $match: { runtime: { $lt: 10 } } }, 
+{
+$group: {
+_id: "$rated",
+count: { $sum: 1 }
+}
+}
+])
+
 
 
